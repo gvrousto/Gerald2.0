@@ -1,35 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routes";
 import './App.css';
 
 function App() {
-  // const HEADERS = {
-  //   Accept: "application/json",
-  //   "Content-Type": "application/json",
-  //   token: localStorage.getItem("token")
-  // };
-  // var example = fetch(`http://localhost:8000/instaLogin`, { headers: HEADERS })
-  //   .then(res => res.json())
-  //   .catch(function(error) {
-  //     return error;
-  //   });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="http://localhost:5000/instaLogin"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {/* Passing global state info and function references to the rest of the app */}
+      <Routes/>
+    </BrowserRouter>
   );
 }
 

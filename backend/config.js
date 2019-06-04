@@ -1,5 +1,10 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 module.exports = {
   port: process.env.PORT || 5000,
-  sock_port: 8000,
-  secret: process.env.SECRET
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
+  insta_redirect: process.env.INSTA_REDIRECT
 };

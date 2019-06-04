@@ -12,6 +12,6 @@ app.use(bodyParser.json());
 
 //All endpoints are defined in ./routes/index.js
 app.use('/', routes);
-var server = app.listen(8000, () => {
-    console.log('Server started on port 8000');
+var server = app.listen(config.port, () => {
+    console.log('Server started on port ' + config.port);
 });

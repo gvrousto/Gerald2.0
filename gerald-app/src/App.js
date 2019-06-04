@@ -3,6 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const HEADERS = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    token: localStorage.getItem("token")
+  };
+  var result = fetch(`http://localhost:8000/`, { headers: HEADERS })
+    .then(res => res.json())
+    .catch(function(error) {
+      return error;
+    });
   return (
     <div className="App">
       <header className="App-header">

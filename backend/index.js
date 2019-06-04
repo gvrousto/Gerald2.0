@@ -1,11 +1,11 @@
-const express   = require('express')
-const app       = express();
+var express     = require('express');
+var app         = express();
 var bodyParser  = require('body-parser');
-var routes      = require('./routes');
+var routes      = require('./routes/routes.js');
 var cors        = require('cors');
 var config      = require('./config');
 
-app.use(cors());
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 

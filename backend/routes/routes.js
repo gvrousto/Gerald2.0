@@ -6,4 +6,5 @@ router.get("/", (req, res) => {
 });
 
 router.get("/instaLogin", instagram.login)
+router.get("/instaAuthorized", instagram.authorized)
 module.exports = router;

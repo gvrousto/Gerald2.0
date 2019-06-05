@@ -2,7 +2,6 @@ var request = require("request");
 var config = require("../config.js");
 
 var login = (req, res) => {
-  console.log(config);
   return res.redirect('https://api.instagram.com/oauth/authorize/?client_id='+
                 config.client_id+
                 '&redirect_uri='+
@@ -10,6 +9,12 @@ var login = (req, res) => {
                 '&response_type=code');
 }
 
+var authorized = (req, res) => {
+  console.log(req.query['code']);
+  return res.redirect('http://localhost:3000/instaAuthorized');
+}
+
 module.exports = {
-  login: login
+  login: login,
+  authorized: authorized
 }

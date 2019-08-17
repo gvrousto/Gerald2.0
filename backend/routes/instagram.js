@@ -1,8 +1,13 @@
-var request = require("request");
-var config = require("../config.js");
+let request = require("request");
+let config = require("../config.js");
+const Clarifai = require('clarifai');
+
+const app = new Clarifai.App({
+ apiKey: config.clarifai_key
+});
 
 //user logs in and we get their code to pass on for auth
-var login = (req, res) => {
+let login = (req, res) => {
   return res.redirect('https://api.instagram.com/oauth/authorize/?client_id='+
                 config.client_id+
                 '&redirect_uri='+
@@ -11,12 +16,14 @@ var login = (req, res) => {
 }
 
 //gets auth code
-var authorized = (req, res) => {
+let authorized = (req, res) => {
   tokenPromise(req.query['code'])
   .then((body)=> JSON.parse(body))
-  .then((body)=>{
-    imagesPromise(body['access_token']);
-  });
+  .then((body) => imagesPromise(body['access_token']))
+  .then((imgArray) => clarifaiPromise(imgArray))
+  .then((body) => console.log(body));
+
+  //change this so instead of a redirect it just sends dat back to page
   return res.redirect('http://localhost:3000/instaAuthorized');
 }
 
@@ -50,14 +57,33 @@ let imagesPromise = (token) => {
   };
   return new Promise((resolve,reject) => {
     request.get(options, (err, resp, body) => {
-      let pBody = JSON.parse(body);
-      let imgArray = pBody['data'].map((item) => {
-        return item['images']['standard_resolution']['url'];
-      });
-      console.log(imgArray);
+      if(err){
+        reject(err);
+      }else{
+        let pBody = JSON.parse(body);
+        let imgArray = pBody['data'].map((item) => {
+          return item['images']['standard_resolution']['url'];
+        });
+        resolve(imgArray);
+      }
     });
   });
 };
+
+let clarifaiPromise = (imgArray) => {
+  return new Promise((resolve,reject) =>{
+    console.log(imgArray);
+    app.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
+    .then(generalModel => {
+      return generalModel.predict(imgArray);
+    })
+    .then(response => {
+      let concepts = response['outputs'][0]['data']['concepts'];
+      concepts = concepts.map((item) => {return item['name']});
+      resolve(concepts)
+    });
+  });
+}
 
 module.exports = {
   login: login,

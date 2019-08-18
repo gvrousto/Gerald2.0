@@ -3,11 +3,12 @@ import React from 'react';
 class Instagram extends React.Component {
 
   render() {
+    window.close();
     return (
       <div className="App">
         <header className="App-header">
           <p>
-            Congrats Dummy
+            Authorized
           </p>
         </header>
       </div>

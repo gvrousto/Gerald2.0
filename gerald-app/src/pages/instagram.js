@@ -2,8 +2,11 @@ import React from 'react';
 
 class Instagram extends React.Component {
 
-  render() {
+  componentDidMount(){
     window.close();
+  }
+
+  render() {
     return (
       <div className="App">
         <header className="App-header">

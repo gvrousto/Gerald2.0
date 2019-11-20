@@ -17,14 +17,13 @@ let login = (req, res) => {
 
 //gets auth code
 let authorized = (req, res) => {
-  tokenPromise(req.query['code'])
+  let clarifaiConcepts = tokenPromise(req.query['code'])
   .then((body)=> JSON.parse(body))
   .then((body) => imagesPromise(body['access_token']))
   .then((imgArray) => clarifaiPromise(imgArray))
-  .then((body) => console.log(body));
-
-  //change this so instead of a redirect it just sends dat back to page
-  return res.redirect('http://localhost:3000/instaAuthorized');
+  .then((clarifaiConcepts) =>{
+    return res.json({ success: true, concepts: clarifaiConcepts });
+  });
 }
 
 //handles posting request to instagram with code for authorization
@@ -72,16 +71,16 @@ let imagesPromise = (token) => {
 
 let clarifaiPromise = (imgArray) => {
   return new Promise((resolve,reject) =>{
-    console.log(imgArray);
-    app.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
-    .then(generalModel => {
-      return generalModel.predict(imgArray);
-    })
-    .then(response => {
-      let concepts = response['outputs'][0]['data']['concepts'];
-      concepts = concepts.map((item) => {return item['name']});
-      resolve(concepts)
-    });
+    resolve(imgArray);
+    // app.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
+    // .then(generalModel => {
+    //   return generalModel.predict(imgArray);
+    // })
+    // .then(response => {
+    //   let concepts = response['outputs'][0]['data']['concepts'];
+    //   concepts = concepts.map((item) => {return item['name']});
+    //   resolve(concepts)
+    // });
   });
 }
 

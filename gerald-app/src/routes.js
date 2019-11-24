@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./pages/home";
-import Instagram from "./pages/instagram"
+import Home from "./components/home";
+import Instagram from "./components/instagram";
 
 const Routes =  ({concepts}) => (
     <Switch>

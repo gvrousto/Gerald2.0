@@ -12,15 +12,12 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <a href={API_URL + "/instaLogin"}>
-            <button>
-              Button
-            </button>
-          </a>
-        </header>
+      <div>
+        <a href={API_URL + "/instaLogin"}>
+          <button>
+            Button
+          </button>
+        </a>
       </div>
     );
   }

@@ -8,9 +8,9 @@ const Routes =  ({concepts}) => (
       <Route exact path="/" component={Home} />
       <Route exact path="/home" render={() => <Redirect to="/" />} />
       <Route exact path="/instaAuthorized" component={Instagram} />
-      <Route exact path="/authorized"
-          render={() => <Home concepts={concepts} />}
-        />
+      <Route path="/authorized/:token"
+        component={Home}
+      />
     </Switch>
 );
 
